@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: public.ecr.aws/j7m8e1j8/jenkins-assignment:v1
+        image: 240068248627.dkr.ecr.ap-south-1.amazonaws.com/jenkins-assignment:v1
         ports:
         - containerPort: 8000
        
