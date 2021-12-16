@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-test
+  labels:
+    app: myapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: public.ecr.aws/j7m8e1j8/jenkins-assignment:v1
+        ports:
+        - containerPort: 8000
+       
