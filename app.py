@@ -1,16 +1,14 @@
-from kubernetes import client, config
-
-config.load_kube_config()
-
-api = client.CustomObjectsApi()
-k8s_nodes = api.list_cluster_custom_object("metrics.k8s.io", "v1beta1", "nodes")
-k8s_pods = api.list_namespaced_custom_object("metrics.k8s.io", "v1beta1", "default", "pods")
-
+import psutil
+import sched
+import time
 
 print("Hello World")
-for stats in k8s_nodes['items']:
-    print("Node Name: %s\tCPU: %s\tMemory: %s" % (stats['metadata']['name'], stats['usage']['cpu'], stats['usage']['memory']))
-
-for stats in k8s_pods['items']:
-    print("Pod Name: %s\tCPU: %s\tMemory: %s" % (stats['metadata']['name'], stats['usage']['cpu'], stats['usage']['memory']))
-
+s = sched.scheduler(time.time, time.sleep)
+def do_something(sc):
+    cpu = psutil.cpu_percent(1)
+    mem = psutil.virtual_memory()
+    print(f'CPU :{cpu}')
+    print(f'Memory :{mem}')
+    s.enter(2, 1, do_something, (sc,))
+s.enter(2, 1, do_something, (s,))
+s.run()
